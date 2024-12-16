@@ -1,0 +1,105 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Function to compute the negative of an image
+def image_negative(image):
+    return 255 - image  # For grayscale images, the negative is obtained by subtracting pixel values from 255
+
+# Function to create a low-contrast image
+def low_contrast_image(image):
+    return cv2.convertScaleAbs(image, alpha=0.5, beta=50)  # Scale pixel values to reduce contrast
+
+# Function to create a high-contrast image
+def high_contrast_image(image):
+    return cv2.convertScaleAbs(image, alpha=2, beta=0)  # Scale pixel values to increase contrast
+
+# Load a sample grayscale image
+image = cv2.imread('/content/image1.png', cv2.IMREAD_GRAYSCALE)  # Replace with your grayscale image path
+
+# Apply the negative transformation
+negative_image = image_negative(image)
+
+# Apply low contrast transformation
+low_contrast = low_contrast_image(image)
+negative_low_contrast = image_negative(low_contrast)
+
+# Apply high contrast transformation
+high_contrast = high_contrast_image(image)
+negative_high_contrast = image_negative(high_contrast)
+
+# Display images and histograms in a 3x4 grid layout
+plt.figure(figsize=(15, 12))
+
+# ROW 1: Original image and its histogram, negative image and its histogram
+plt.subplot(3, 4, 1)
+plt.imshow(image, cmap='gray')
+plt.title("Original Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 2)
+plt.hist(image.ravel(), bins=256, range=(0, 256), color='blue', alpha=0.7)
+plt.title("Histogram of Original Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+plt.subplot(3, 4, 3)
+plt.imshow(negative_image, cmap='gray')
+plt.title("Negative Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 4)
+plt.hist(negative_image.ravel(), bins=256, range=(0, 256), color='red', alpha=0.7)
+plt.title("Histogram of Negative Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+# ROW 2: Low contrast image and its histogram, negative low contrast image and its histogram
+plt.subplot(3, 4, 5)
+plt.imshow(low_contrast, cmap='gray')
+plt.title("Low Contrast Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 6)
+plt.hist(low_contrast.ravel(), bins=256, range=(0, 256), color='green', alpha=0.7)
+plt.title("Histogram of Low Contrast Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+plt.subplot(3, 4, 7)
+plt.imshow(negative_low_contrast, cmap='gray')
+plt.title("Negative Low Contrast Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 8)
+plt.hist(negative_low_contrast.ravel(), bins=256, range=(0, 256), color='orange', alpha=0.7)
+plt.title("Histogram of Negative Low Contrast Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+# ROW 3: High contrast image and its histogram, negative high contrast image and its histogram
+plt.subplot(3, 4, 9)
+plt.imshow(high_contrast, cmap='gray')
+plt.title("High Contrast Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 10)
+plt.hist(high_contrast.ravel(), bins=256, range=(0, 256), color='purple', alpha=0.7)
+plt.title("Histogram of High Contrast Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+plt.subplot(3, 4, 11)
+plt.imshow(negative_high_contrast, cmap='gray')
+plt.title("Negative High Contrast Image")
+plt.axis('off')
+
+plt.subplot(3, 4, 12)
+plt.hist(negative_high_contrast.ravel(), bins=256, range=(0, 256), color='brown', alpha=0.7)
+plt.title("Histogram of Negative High Contrast Image")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+
+# Show the plots
+plt.tight_layout()
+plt.show()
